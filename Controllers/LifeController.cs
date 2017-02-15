@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 
+namespace FisherInsurance.Controllers
+{
 
     public class LifeController : Controller
     {
         // GET: /<controller>/
-        
-    [HttpPost]
+
+        [HttpPost]
         // GET: /<controller>/
         public IActionResult Post([FromBody]string value)
         {
@@ -33,3 +35,4 @@ using Microsoft.AspNetCore.Mvc;
             return Delete(id);
         }
     }
+}
