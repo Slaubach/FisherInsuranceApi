@@ -6,9 +6,13 @@ using FisherInsuranceApi.Models;
 namespace FisherInsuranceApi.Data
 {
     public class MemoryStore : IMemoryStore
-    {         // A list that runs in-memory and holds quotes         
+    {
+        // A list that runs in-memory and holds quotes         
+
         private Dictionary<int, Quote> quotes;
+
         // Constructor. This fills our in memory store with quotes for AutoInsurance 
+
         public MemoryStore()
         {
             quotes = new Dictionary<int, Quote>();
@@ -29,10 +33,13 @@ namespace FisherInsuranceApi.Data
                 quote.Id = key;             }
 quotes[quote.Id] = quote;             return quote;         }
         // Simulate 'Retrieve All' - a lambda expression for getting all quotes        
-        public IEnumerable<Quote> RetrieveAllQuotes => quotes.Values;         // Simulate 'Retrieve'  - lambda expression for getting a specific quote; returns null if not found
+        public IEnumerable<Quote> RetrieveAllQuotes => quotes.Values;        
+        // Simulate 'Retrieve'  - lambda expression for getting a specific quote; returns null if not found
         public Quote RetrieveQuote(int id) => quotes.ContainsKey(id) ? quotes[id] : null;
 
         // Simulate 'Update'  - lambda expression for getting a specific quote; returns null if not found
 
-public Quote UpdateQuote(Quote quote) { quotes[quote.Id] = quote; return quote; }         // Simulate 'Delete'          
-        public void DeleteQuote(int id)         {             quotes.Remove(id);         }     } }
+public Quote UpdateQuote(Quote quote)
+        { quotes[quote.Id] = quote; return quote; }         // Simulate 'Delete'          
+        public void DeleteQuote(int id)         {
+            quotes.Remove(id);         }     } }
