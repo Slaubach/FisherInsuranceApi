@@ -15,45 +15,68 @@ namespace FisherInsurance.Controllers
 
     public class QuotesController : Controller
     {
+        private readonly FisherContext db;
 
-
-        private IMemoryStore db;
-
-        public QuotesController(IMemoryStore repo)
-        
+        public QuotesController(FisherContext context)
         {
-            db = repo;
+            db = context;
         }
-    
+
+
+
         [HttpGet]
         public IActionResult GetQuotes()
 
-        { return Ok(db.RetrieveAllQuotes); }
+        { return Ok(db.Quotes); }
 
         [HttpPost]
         // GET: /<controller>/
         public IActionResult Post([FromBody] Quote quote)
         {
-            return Ok(db.CreateQuote(quote));
+            var newClaim = db.Quotes.Add(Quotes);
+
+            db.SaveChanges();
+
+            return CreatedAtRoute("GetClaim", new { id = quote.Id }, quote);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="GetQuote")]
         public IActionResult Get(int id)
         {
-            return Ok(db.RetrieveQuote(id));
-        }
+            return Ok(db.Quotes.Find(id));        }
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Quote quote)
         {
-            return Ok(db.UpdateQuote(quote));
+            var newClaim = db.Quotes.Find(id);
+
+            if (newClaim == null)
+            {
+                return NotFound();
+            }
+
+            newClaim = Quotes;
+
+            db.SaveChanges();
+
+            return Ok(newClaim);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            db.DeleteQuote(id);
-            return Ok();
+            var claimToDelete = db.Quotes.Find(id);
+
+            if (claimToDelete == null)
+            {
+                return NotFound();
+            }
+
+            db.Quotes.Remove(claimToDelete);
+
+            db.SaveChangesAsync();
+
+            return NoContent();
         }
-       
+
     }
 }
